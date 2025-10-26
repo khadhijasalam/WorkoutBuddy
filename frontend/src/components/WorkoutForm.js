@@ -1,9 +1,13 @@
 import {useState} from 'react'
+import {useWorkoutContext} from '../hooks/useWorkoutContext'
+
 
 const WorkoutForm =()=>{
     const [title,setTitle]= useState('')
     const [load,setLoad]= useState('')
     const [reps,setReps]= useState('')
+    const [error, setError] = useState(null);
+    const {dispatch}= useWorkoutContext()
 
 
 
@@ -14,8 +18,10 @@ const WorkoutForm =()=>{
         const workout={
         title, load, reps
         };
-
-        const response= await fetch('/api/workouts',{
+//fetch will send req from frontend to backend and get the result which will be save as response from server
+      
+// Note:So response is the object representing what the server sent back( status,ok,json), not the data itself (you parse it into json)
+const response= await fetch('/api/workouts',{
               method:'POST',
               body: JSON.stringify(workout),
               headers: {
@@ -23,12 +29,21 @@ const WorkoutForm =()=>{
               }
             }
         )  
+        // converts the response string from server back to js object
         const json= await response.json()
 
         if (!response.ok){
-            return(
-                <p>{json.error}</p>
-            )
+            setError(json.error);
+ 
+        }
+        if (response.ok){
+            setError(null);
+            console.log("New workout added");
+            setTitle('');
+            setLoad('');
+            setReps('');
+            dispatch({type:'CREATE_WORKOUT', payload:json})
+ 
         }
 
     }
@@ -57,7 +72,7 @@ const WorkoutForm =()=>{
              id="reps" name="reps" 
             />
             <button type="submit">Add Workout</button>
-            {}
+            {error && <div className="error">{error}</div>}
         </form>
     </div>
     
