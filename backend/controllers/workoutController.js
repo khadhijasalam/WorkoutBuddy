@@ -25,7 +25,7 @@ const getWorkout= async(req,res)=>{
 
     //to stop internal code crash from wrong id in url
     if(!mongoose.Types.ObjectId.isValid(id)){
-        return res.status(404).json({error: 'No such workound found'})
+        return res.status(404).json({error: 'No such workout found'})
 
     }
 
@@ -37,7 +37,7 @@ const getWorkout= async(req,res)=>{
        return res.status(200).json(workout)
 
     }catch(error){
-        return res.status(400).json({error: error.message})
+        return res.status(500).json({error: error.message})
     }
     
 }
@@ -49,6 +49,27 @@ const getWorkout= async(req,res)=>{
 
 const createWorkout= async(req, res)=>{
     const {title, load, reps}= req.body
+    let emptyFields=[]
+    const errorMsg= 'All fields must be filled'
+
+    if (!title){
+        emptyFields.push('title')
+    }
+    if (!load){
+        emptyFields.push('load')
+    }
+
+    if (!reps){
+        emptyFields.push('reps')
+    }
+    if (emptyFields.length>0){
+               return res.status(400).json({error: errorMsg, emptyFields})
+
+    }
+
+
+
+
 
     //enter data to mongodb
     try{
@@ -74,7 +95,7 @@ const deleteWorkout= async(req, res)=>{
         if(!workout){
             return res.status(404).json({error:'No such workout found'})
         }
-       return res.status(200).json({msg:'deleted'})
+       return res.status(200).json(workout)
 
     }catch(error){
         return res.status(400).json({error: error.message})
@@ -100,7 +121,7 @@ const updateWorkout= async(req, res)=>{
        return res.status(200).json(workout)
 
     }catch(error){
-        return res.status(400).json({error: error.message})
+        return res.status(400).json({error: error})
     }
 
 }
