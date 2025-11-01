@@ -1,4 +1,4 @@
-const Workout= require('../models/userModel')
+const User= require('../models/userModel')
 
 //login user
 
@@ -9,7 +9,7 @@ const loginUser = async( req,res)=>{
 
 
 //sign up user
-const signUpUser=(req,res)=>{
+const signUpUser= async (req,res)=>{
     res.msg({msg:'signUp User'})
 }
 
