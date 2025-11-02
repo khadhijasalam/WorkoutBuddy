@@ -1,5 +1,5 @@
 const express = require('express')
-const Workout=require('../models/workoutModel')
+// const Workout=require('../models/workoutModel')
 
 const {createWorkout,getAllWorkouts,getWorkout, deleteWorkout,updateWorkout}= require('../controllers/workoutController')
 
