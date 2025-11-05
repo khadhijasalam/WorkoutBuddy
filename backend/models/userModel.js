@@ -49,5 +49,23 @@ userSchema.statics.signUp= async function(email, password){
 
 
 }
+
+userSchema.statics.login= async function(email,password){
+    if(!email||!password){
+        throw Error('All fields must be filled')
+    }
+
+    const user= await this.findOne({email})
+    if (!user){
+        throw Error('There is no account associated with this email')
+    }
+
+    const validUser= await bcrypt.compare(password,user.password)
+    console.log(validUser)
+    return user
+}
+
+
+
 // module.export=signUp()
 module.exports= mongoose.model('User', userSchema)
