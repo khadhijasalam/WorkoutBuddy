@@ -20,21 +20,26 @@ const userSchema= new Schema({
 
 //Static method called signUp on userSchema model
 //cantt use this with arrow function
-userSchema.statics.signUp= async function(req, res){
-    const {email,password} = req.body
-    email='hello@jnd'
-    password='212'
+userSchema.statics.signUp= async function(email, password){
+    
 
-    const exists= await this.findOne({email: email})
+    const exists= await this.findOne({email:email})
     if (exists){
         throw Error('This email was already used ')
     }
 
-    const salt = bcrypt.genSalt(10,password)
-    const hash= bcrypt.hash(password,salt)
-    console.log(salt, password)
+    const salt = await bcrypt.genSalt(10)
+    const hash= await bcrypt.hash(password,salt)
+
+    const user= await this.create({email,password:hash})
+
+
+    return user
+
+
+
 
 
 }
-
-module.export= mongoose.model('User', userSchema)
+// module.export=signUp()
+module.exports= mongoose.model('User', userSchema)

@@ -30,9 +30,6 @@ app.use('/api/user/',userRoutes)
 
 
 
-// console.log(process.env.PORT)
-// console.log(process.env.MONGO_URI)
-
 
 mongoose.connect((process.env.MONGO_URI)).then(()=>{
     console.log('mongodb connected')
