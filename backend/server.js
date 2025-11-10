@@ -1,6 +1,7 @@
 //for .env files. we access using process.env
 require('dotenv').config()
 const express= require('express')
+const cors =require('cors')
 const mongoose= require('mongoose')
 const workoutRoutes=require('./routes/workout.js')
 const userRoutes=require('./routes/user.js')
@@ -13,6 +14,16 @@ const userRoutes=require('./routes/user.js')
 // Start express app. (creates express application instance)
 const app=express()
 
+app.use(
+  cors({
+    origin: 'https://workout-buddy-f.vercel.app', 
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, // if we use cookies or authentication headers
+  })
+);
+
+app.options('*', cors());
 //middleware that allows server to access data sent by the client( frontend, browser).(post, update etc)
 // parses the JSON in http request
 app.use(express.json())
