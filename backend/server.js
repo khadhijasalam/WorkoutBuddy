@@ -14,16 +14,32 @@ const userRoutes=require('./routes/user.js')
 // Start express app. (creates express application instance)
 const app=express()
 
-app.use(
-  cors({
-    origin: 'https://workout-buddy-one-lovat.vercel.app', 
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true, // if we use cookies or authentication headers
-  })
-);
 
-app.options('*', cors());
+// ✅ Step 1: Define CORS options clearly
+const allowedOrigins = [
+  'https://workout-buddy-one-lovat.vercel.app', // frontend
+  'http://localhost:3000' // local dev
+];
+
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+};
+
+// ✅ Step 2: Apply CORS *before* JSON middleware
+app.use(cors(corsOptions));
+
+// ✅ Step 3: Explicitly handle OPTIONS preflight requests
+app.options('*', cors(corsOptions));
+
 //middleware that allows server to access data sent by the client( frontend, browser).(post, update etc)
 // parses the JSON in http request
 app.use(express.json())
