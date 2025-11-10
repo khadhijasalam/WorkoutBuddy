@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {useAuthContext} from '../hooks/useAuthContext'
-
+const API_BASE_URL = process.env.REACT_APP_API_URL || '';
 
 export const useSignUp =()=>{
 const [error,setError]=useState(null)
@@ -11,7 +11,7 @@ const signUp= async(email,password)=>{
     setIsLoading(true)
     setError(null)
 
-    const response= await fetch('/api/user/signup',{
+    const response= await fetch(`${API_BASE_URL}/api/user/signup`,{
         method:'POST',
         body:JSON.stringify({email,password}),
 
