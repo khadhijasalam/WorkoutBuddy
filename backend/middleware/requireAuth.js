@@ -2,6 +2,10 @@ const jwt= require('jsonwebtoken')
 const User = require('../models/userModel')
 
 const requireAuth= async(req,res,next)=>{
+     const publicPaths = ['/login', '/signup', '/favicon.png'];
+  if (publicPaths.includes(req.path)) {
+    return next();
+  }
     const {authorization}= req.headers
 
     if(!authorization){
