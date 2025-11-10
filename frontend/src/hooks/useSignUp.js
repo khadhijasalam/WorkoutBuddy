@@ -7,6 +7,7 @@ const [error,setError]=useState(null)
 const [isLoading, setIsLoading]=useState(false)
 const {dispatch}=useAuthContext()
 
+console.log(`${API_BASE_URL}/api/user/signup`)
 const signUp= async(email,password)=>{
     setIsLoading(true)
     setError(null)

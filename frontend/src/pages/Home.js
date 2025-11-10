@@ -20,6 +20,7 @@ fetch(`${API_BASE_URL}/api/hello`)
 
   useEffect(() => {
     const fetchWorkouts = async () => {
+      console.log(`${API_BASE_URL}/api/workouts`)
       const response = await fetch(`${API_BASE_URL}/api/workouts`,{
         headers:
         {
