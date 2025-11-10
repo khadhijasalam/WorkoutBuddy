@@ -16,7 +16,7 @@ const app=express()
 
 app.use(
   cors({
-    origin: 'https://workout-buddy-f.vercel.app', 
+    origin: 'https://workout-buddy-one-lovat.vercel.app', 
       methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true, // if we use cookies or authentication headers
