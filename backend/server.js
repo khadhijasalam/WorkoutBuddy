@@ -18,7 +18,7 @@ const app=express()
 // ✅ Step 1: Define CORS options clearly
 const allowedOrigins = [
   'https://workout-buddy-one-lovat.vercel.app', // frontend
-  'http://localhost:3000' // local dev
+  'http://localhost:4000' // local dev
 ];
 
 const corsOptions = {
@@ -37,8 +37,6 @@ const corsOptions = {
 // ✅ Step 2: Apply CORS *before* JSON middleware
 app.use(cors(corsOptions));
 
-// ✅ Step 3: Explicitly handle OPTIONS preflight requests
-app.options('*', cors(corsOptions));
 
 //middleware that allows server to access data sent by the client( frontend, browser).(post, update etc)
 // parses the JSON in http request
