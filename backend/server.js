@@ -7,10 +7,6 @@ const workoutRoutes=require('./routes/workout.js')
 const userRoutes=require('./routes/user.js')
 
 
-
-
-
-
 // Start express app. (creates express application instance)
 const app=express()
 
@@ -18,14 +14,18 @@ const app=express()
 // ✅ Step 1: Define CORS options clearly
 const allowedOrigins = [
   'https://workout-buddy-one-lovat.vercel.app', // frontend
-  'http://localhost:4000' // local dev
+  'http://localhost:3000', // local dev
+  
+  'http://localhost:4000'
 ];
 
 const corsOptions = {
   origin: function (origin, callback) {
+      console.log("Request from origin:", origin);
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log("❌ Blocked by CORS:", origin);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -53,7 +53,9 @@ app.use((req,res,next)=>{
 app.use('/api/workouts/',workoutRoutes)
 app.use('/api/user/',userRoutes)
 
-
+app.get('/api/test', (req, res) => {
+  res.json({ message: 'CORS working and backend reachable!' });
+});
 
 
 mongoose.connect((process.env.MONGO_URI)).then(()=>{

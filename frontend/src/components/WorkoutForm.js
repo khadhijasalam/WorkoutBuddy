@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useWorkoutContext } from '../hooks/useWorkoutContext'
 import { useAuthContext } from '../hooks/useAuthContext'
-const API_BASE_URL = process.env.REACT_APP_API_URL || '';
-
+const API_BASE_URL = process.env.REACT_APP_API_URL;
+                             
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutContext()
 

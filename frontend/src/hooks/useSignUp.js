@@ -1,7 +1,9 @@
 import {useState} from 'react'
 import {useAuthContext} from '../hooks/useAuthContext'
-const API_BASE_URL = process.env.REACT_APP_API_URL || '';
-
+const API_BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.REACT_APP_API_URL   // 👉 for Vercel → Render
+    : '';                              
 export const useSignUp =()=>{
 const [error,setError]=useState(null)
 const [isLoading, setIsLoading]=useState(false)
