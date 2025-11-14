@@ -13,16 +13,23 @@ const app=express()
 
 // ✅ Step 1: Define CORS options clearly
 const allowedOrigins = [
-  'https://workout-buddy-one-lovat.vercel.app', // frontend
-  'http://localhost:3000', // local dev
-  
+  'https://workout-buddy-one-lovat.vercel.app',
+  'http://localhost:3000',
   'http://localhost:4000'
 ];
 
 const corsOptions = {
-  origin: function (origin, callback) {
-      console.log("Request from origin:", origin);
-    if (!origin || allowedOrigins.includes(origin)) {
+    origin: function (origin, callback) {
+    console.log("Request from origin:", origin);
+
+    if (!origin) {
+      return callback(null, true); // Allow tools like Postman
+    }
+
+    // 🔥 FIX: allow origins that start with allowedOrigins (handles trailing slashes)
+    const isAllowed = allowedOrigins.some(o => origin.startsWith(o));
+
+    if (isAllowed) {
       callback(null, true);
     } else {
       console.log("❌ Blocked by CORS:", origin);

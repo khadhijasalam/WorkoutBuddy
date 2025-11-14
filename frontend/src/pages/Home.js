@@ -13,9 +13,6 @@ const Home = () => {
   const {user}= useAuthContext()
 
 
-fetch(`${API_BASE_URL}/api/hello`)
-  .then(res => res.json())
-  .then(data => console.log(data));
 
 
   useEffect(() => {
